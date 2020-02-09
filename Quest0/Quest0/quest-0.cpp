@@ -83,24 +83,48 @@ int main () {
 }
 
 bool isGameDone (string currentGuess) {
-    /*  This function determines if the game is over */
-
-    return true; // placeholder
+	if (currentGuessNumber >= maxNumberGuesses) {
+		return true;
+	}
+	if (currentGuessString == correctCountry) {
+		return true;
+	}
+	else return false;
 }
 
 bool isGameSuccessful (string currentGuess) {
     /*  This function determines if a player succesfully
         guessed all of the characters
     */
+	if (isGameDone(currentGuessString)) {
+		if (currentGuessString == correctCountry) {
+			return true;
+		}
 
-    return false; // placeholder
+		else return false;
+	}
+	
+	
 }
 
-void printGameOver (string currentGuess) {
-    /*
-        This function will print out the game board with a message at the bottom
-        "CONGRATS" if the the player was successful and "YOU FAILED" if they werent.
-    */
+void printGameOver(string currentGuess) {
+	/*
+		This function will print out the game board with a message at the bottom
+		"CONGRATS" if the the player was successful and "YOU FAILED" if they werent.
+	*/
+	//if (isGameSuccessful) {
+		//printGameBoard( currentGuessString);
+		//cout << "CONGRATS" << endl;
+	//}
+	
+	if (isGameSuccessful(currentGuessString)) {
+		printGameBoard(currentGuessString);
+		cout << "CONGRATS" << endl;
+	}
+	if (!isGameSuccessful(currentGuessString)) {
+		printGameBoard(currentGuessString);
+		cout << "YOU FAILED" << endl;
+	}
 }
 
 void printGameBoard (string guess) {
@@ -111,12 +135,41 @@ void printGameBoard (string guess) {
         The width of the box is the length of the guess string + 2*padding.
         The padding defines the number of spaces on either side of the underline
     */
+	int i;
+	cout << "+";
+	for (i = 0; i <= currentGuessString.length() +(2*padding)-2 ; i++) {
+		cout << "-" ;
+	}
+	cout << "+" << endl;
+	
+	cout << "|   ";
+	for (i = 0; i <= currentGuessString.length() + (2 * padding)-8; i++) {
+		
+	}
+	cout << currentGuessString;
+	cout << "  |"<< endl;
+
+	cout << "|   ";
+	for (i = 0; i <= currentGuessString.length() + (2 * padding)-8; i++) {
+		cout  << "_" ;
+	}
+	cout << "   |" << endl;
+
+	cout << "+";
+	for (i = 0; i <= currentGuessString.length() + (2 * padding)-2; i++) {
+		cout << "-";
+	}
+	cout << "+" << endl;
 }
 
 void printNumberOfTries () {
     /* this function will print out the number of tries that the user has attempted
         as well as a message
     */
+	
+	cout << "NUMBER OF TRIES:" << currentGuessNumber << endl;
+	
+
 }
 
 char processUserInput () {
@@ -124,16 +177,32 @@ char processUserInput () {
         This function will print out a message for the user to enter a character
         The character will then be returned,
     */
-
-    return 'n'; // placeholder
+	char userGuess = 'a';
+	cout << "Enter a letter:" << endl;
+	cin >> userGuess;
+	cout << endl;
+    return userGuess; // placeholder
 }
 
-void fillLetters (char guessChar, string secretWord) {
-    /*
-        This function will modify the global variable currentGuessString.
-        If any characters in the secretWord match with the guessChar, those
-        characters in currentGuessString need to be changed.
-    */
+void fillLetters(char guessChar, string secretWord) {
+	/*
+		This function will modify the global variable currentGuessString.
+		If any characters in the secretWord match with the guessChar, those
+		characters in currentGuessString need to be changed.
+	*/
+	int i;
+	bool anyMatch = false;
+	for (i = 0; i <= correctCountry.length(); i++) {
+		if (correctCountry[i] == guessChar) {
+			currentGuessString[i] = guessChar;
+			anyMatch = true;
+		}
+
+
+	}
+	if (anyMatch == false) {
+		++currentGuessNumber;
+	}
 }
 
 void pauseConsole () {
@@ -150,10 +219,13 @@ void clearConsole () {
     #endif
 }
 
-int chooseRandomCountry () {
-    random_device seed;
-    default_random_engine engine(seed());
-    uniform_int_distribution<int> dist(0, numCountries-1);
+int chooseRandomCountry() {
+	random_device seed;
+	default_random_engine engine(seed());
+	uniform_int_distribution<int> dist(0, numCountries - 1);
 
-    return dist(engine);
+	return dist(engine);
 }
+
+
+

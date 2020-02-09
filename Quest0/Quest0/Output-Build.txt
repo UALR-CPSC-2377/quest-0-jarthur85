@@ -1,0 +1,3 @@
+﻿1>------ Build started: Project: Quest0, Configuration: Debug x64 ------
+1>Quest0.vcxproj -> \\ad.ualr.edu\UEM\UEMProfiles\jarthur\Desktop\Spring 2020\quest-0-jarthur85\Quest0\x64\Debug\Quest0.exe
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
